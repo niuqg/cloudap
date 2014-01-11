@@ -41,14 +41,54 @@ struct wpa_init_params {
 
 	u8 *own_addr; // ETH_ALENlength,buffer for writing own MAC address 
 };
+struct buf_params{
+	char global_priv;
+	u8 bssid[20];
+	char ifname[20];
+	u8 ssid[20];
+	u32 ssid_len;
+	char test_socket;
+	int use_pae_group_addr;
+	char bridge[20];
+	u32 num_bridge;
+	u8 own_addr[50];
+};
 */
 int wpa_init_params_parser(char * pdu, int pdu_size,struct wpa_init_params *params)
 {
+	struct buf_params  bufs;
+	memcpy(&bufs,pdu,sizeof(struct buf_params));
+	printf("ifname is %s\n",bufs.ifname);
+	printf("Mac is "MACSTR"\n",MAC2STR(bufs.own_addr));
+	printf("ssid is %s\n",bufs.ssid);
+	printf("ssid_len is%u32",bufs.ssid_len);
+	params->bridge=bufs.bridge;//未实现
+	params->bssid=bufs.bssid;
+	params->ifname=bufs.ifname;
+	params->use_pae_group_addr=bufs.use_pae_group_addr;
+	params->num_bridge=bufs.num_bridge;
+	params->test_socket=bufs.test_socket;
+	params->own_addr=bufs.own_addr;
+	params->ssid=bufs.ssid;
+	params->ssid_len=bufs.ssid_len;
+	params->global_priv=bufs.global_priv;//未实现
     return 0;
 }
 
 int wpa_init_params_format(char * pdu, int pdu_size,struct wpa_init_params *params)
 {
+	struct buf_params  bufs;
+	bufs.global_priv='W';
+	bufs.ssid_len=params->ssid_len;
+	bufs.test_socket=params->test_socket;
+	bufs.use_pae_group_addr=params->use_pae_group_addr;
+	strncpy(bufs.bridge,params->bridge,20);
+	//strncpy(bufs.bssid,params->bssid,20);
+	strncpy(bufs.ifname,params->ifname,20);
+	strncpy(bufs.own_addr,params->own_addr,50);
+	strncpy(bufs.ssid,params->ssid,20);
+	memset(pdu,0,sizeof(pdu));
+	memcpy(pdu,&bufs,sizeof(struct buf_params));
     return 0;   
 }
 /*

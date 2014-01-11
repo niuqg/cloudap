@@ -478,7 +478,7 @@ static void *i802_init(struct hostapd_data *hapd,
 	/* format  params to buf */
 	wpa_init_params_format(buf,MAX_BUF_LEN,params);
 	/* send buf(params) */
-    int ret = send(newfd,"hi",sizeof("hi"),0);
+    int ret = send(newfd,buf,sizeof(buf),0);
     if(ret > 0)
     {
         printf("send \"hi\" to %s:%d\n",(char*)inet_ntoa(clientaddr.sin_addr),ntohs(clientaddr.sin_port));

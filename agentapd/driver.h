@@ -965,7 +965,18 @@ struct wpa_init_params {
 
 	u8 *own_addr; /* buffer for writing own MAC address */
 };
-
+struct buf_params{
+	char global_priv;
+	u8 bssid[20];
+	char ifname[20];
+	u8 ssid[20];
+	u32 ssid_len;
+	char test_socket;
+	int use_pae_group_addr;
+	char bridge[20];
+	u32 num_bridge;
+	u8 own_addr[50];
+};
 
 struct wpa_bss_params {
 	/** Interface name (for multi-SSID/VLAN support) */
