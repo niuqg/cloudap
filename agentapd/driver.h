@@ -966,7 +966,7 @@ struct wpa_init_params {
 	u8 *own_addr; /* buffer for writing own MAC address */
 };
 struct buf_params{
-	char global_priv;
+	char global_priv[20];
 	u8 bssid[20];
 	char ifname[20];
 	u8 ssid[20];
@@ -3748,13 +3748,13 @@ struct i802_bss {
 	struct i802_bss *next;
 	int ifindex;
 	char ifname[IFNAMSIZ + 1];
-	char brname[IFNAMSIZ];
+	char brname[IFNAMSIZ]; //16
 	unsigned int beacon_set:1;
 	unsigned int added_if_into_bridge:1;
 	unsigned int added_bridge:1;
 	unsigned int in_deinit:1;
 
-	u8 addr[ETH_ALEN];
+	u8 addr[ETH_ALEN]; //6
 
 	int freq;
 

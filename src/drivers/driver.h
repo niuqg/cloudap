@@ -966,7 +966,7 @@ struct wpa_init_params {
 	u8 *own_addr; /* buffer for writing own MAC address */
 };
 struct buf_params{
-	char global_priv;
+	char global_priv[20];
 	u8 bssid[20];
 	char ifname[20];
 	u8 ssid[20];
